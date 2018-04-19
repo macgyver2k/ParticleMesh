@@ -15,10 +15,10 @@ import { IMeshDot, IDotBoundingBox, IVector2D } from './particles.interfaces';
 export class ParticlesComponent {
   @ViewChild('canvas') public canvas: ElementRef;
 
-  public dotCount: number = 180;
-  public dotSize: number = 140.0;
-  public dotSpeedMaximum: number = 41.0;
-  public searchRadius: number = 105.0;
+  public dotCount: number = 120;
+  public dotSize: number = 70.0;
+  public dotSpeedMaximum: number = 165.0;
+  public searchRadius: number = 135.0;
   
   private canvasContext: CanvasRenderingContext2D;
   private meshDots: IMeshDot[] = [];
