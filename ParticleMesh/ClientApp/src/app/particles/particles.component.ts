@@ -132,8 +132,10 @@ export class ParticlesComponent {
         maxX: currentMeshDot.position.x + radius,
         minX: currentMeshDot.position.x - radius,
         maxY: currentMeshDot.position.y + radius,
-        minY: currentMeshDot.position.y - radius
+        minY: currentMeshDot.position.y - radius,
       });
+
+      let maximumHue = 64;
       
       for (let currentNearest of nearestDots) {
         var distance = Math.sqrt(Math.pow((currentMeshDot.position.x - currentNearest.dot.position.x), 2) +
@@ -143,18 +145,28 @@ export class ParticlesComponent {
         var cleanDistance = Math.max(0, Math.min(maximumDistance, distance));
         
         let ration = cleanDistance / maximumDistance;
-        let hue = 255 - 255 * ration;
+        let hue = Math.min( maximumHue, 255 - 255 * ration );
 
         let rounded = Math.round( hue );
         let hueString = rounded.toString(16).padStart(2, "0");
 
-        this.canvasContext.strokeStyle = "#a6a6a6" + hueString;
+        this.canvasContext.lineWidth = 1;
+        this.canvasContext.strokeStyle = "#969696" + hueString;
         this.canvasContext.beginPath();
         this.canvasContext.moveTo(currentMeshDot.position.x, currentMeshDot.position.y);
         this.canvasContext.lineTo(currentNearest.dot.position.x, currentNearest.dot.position.y);
         this.canvasContext.stroke();
         this.canvasContext.closePath();
       }
+
+      this.canvasContext.beginPath();
+      this.canvasContext.strokeStyle = "#969696"; //+ maximumHue.toString( 16 ).padStart( 2, "0" ) ;
+      this.canvasContext.lineWidth = Math.max(3, Math.min(5, nearestDots.length));
+      
+      this.canvasContext.moveTo(currentMeshDot.position.x, currentMeshDot.position.y);
+      this.canvasContext.lineTo(currentMeshDot.position.x, currentMeshDot.position.y);
+      this.canvasContext.stroke();
+      this.canvasContext.closePath();
     };
   }
 
